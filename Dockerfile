@@ -6,8 +6,12 @@ WORKDIR /app
     # Copy package files
 COPY package*.json ./
 
-# Install dependencies deterministically (uses package-lock.json)
-RUN npm ci --no-audit --no-fund
+# lockfile was generated on linux/amd64. Jenkins is t4g arm64, so npm ci
+# skips lightningcss / @tailwindcss/oxide native addons for this platform.
+RUN npm ci --no-audit --no-fund \
+ && npm install --no-save --no-audit --no-fund \
+      lightningcss-linux-arm64-gnu@1.30.1 \
+      @tailwindcss/oxide-linux-arm64-gnu@4.1.14
 
 # Copy source code
 COPY . .
