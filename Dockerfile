@@ -23,8 +23,8 @@ ENV VITE_API_URL=$VITE_API_URL
 # Build the application
 RUN npm run build
 
-# Production stage
-FROM nginx:alpine
+# Production image is amd64 for Kind (t3). Builder may be arm64 on Jenkins t4g.
+FROM --platform=linux/amd64 nginx:alpine
 
 # Copy built assets from builder stage
 COPY --from=builder /app/dist /usr/share/nginx/html
