@@ -1,7 +1,4 @@
-// DEV: chỉ khai báo service của bạn. Không viết docker/gitops ở đây.
+// DEV: chỉ tên service. Image và GitOps do shared library.
 @Library('go-micro-ci@main') _
 
-ciGoMicroService([
-  service   : 'client',
-  imageRepo : 'minhtri1612/client',
-])
+ciGoMicroService('client')
